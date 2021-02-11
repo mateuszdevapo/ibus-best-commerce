@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "eb9189bd-22c2-47ee-986c-1287adb49899",
+		"name": "PRODUCT_LISTING",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/product",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7800/product-listing/v1/product?productId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7800",
+					"path": [
+						"product-listing",
+						"v1",
+						"product"
+					],
+					"query": [
+						{
+							"key": "rows",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "offset",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "orderProperty",
+							"value": "inventory",
+							"disabled": true
+						},
+						{
+							"key": "sortDirection",
+							"value": "DESC",
+							"disabled": true
+						},
+						{
+							"key": "productId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7800/product-listing/v1/products?orderProperty=unitPrice&sortDirection=ASC&rows=10&offset=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7800",
+					"path": [
+						"product-listing",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "orderProperty",
+							"value": "unitPrice"
+						},
+						{
+							"key": "sortDirection",
+							"value": "ASC"
+						},
+						{
+							"key": "rows",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

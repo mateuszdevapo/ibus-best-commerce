@@ -1,0 +1,43 @@
+
+
+CREATE COMPUTE MODULE getProducts_GET_Products
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		CALL GetData();
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE GetData() BEGIN
+		DECLARE rows CHARACTER InputLocalEnvironment.REST.Input.Parameters.rows;
+		DECLARE offset CHARACTER InputLocalEnvironment.REST.Input.Parameters.offset;
+		DECLARE orderProperty CHARACTER InputLocalEnvironment.REST.Input.Parameters.orderProperty;
+		DECLARE sortDirection CHARACTER InputLocalEnvironment.REST.Input.Parameters.sortDirection;
+		
+		DECLARE query CHARACTER 'SELECT id, category, name, description, unitprice, inventory, paymentoption, deliverymethod '
+			||	'FROM public.products WHERE inventory > 5 ';
+		
+			
+		IF orderProperty IS NOT NULL AND orderProperty <> '' AND sortDirection IS NOT NULL AND sortDirection <> '' THEN
+			SET query = query  || 'ORDER BY ' || orderProperty || ' ' ||  sortDirection || ' ';						
+		END IF;
+			
+		IF rows IS NOT NULL AND rows <> '' AND offset IS NOT NULL AND offset <> '' THEN
+			SET query = query  || 'LIMIT  ' || rows || ' '  || 'OFFSET ' || offset || ' ';																			
+		END IF;
+											
+		SET Environment.Variables.Data.Products[] = PASSTHRU(query);
+		
+	END;
+	
+END MODULE;

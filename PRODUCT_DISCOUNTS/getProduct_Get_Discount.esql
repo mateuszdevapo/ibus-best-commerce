@@ -1,0 +1,35 @@
+
+
+CREATE COMPUTE MODULE getProduct_Get_Discount
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		CALL CopyEntireMessage();
+		CALL GetDiscount();
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+	
+	CREATE PROCEDURE GetDiscount() BEGIN	
+		DECLARE productId CHARACTER CAST(InputLocalEnvironment.REST.Input.Parameters.productId AS INTEGER);		
+		
+		DECLARE SQLQuery CHARACTER 'SELECT id, productid, datefrom, dateto, discount FROM public.product_discount where productId =  ' ||  productId || ' '
+		|| 'ORDER BY id DESC LIMIT 1';						
+
+		SET Environment.Variables.Data.Discounts[] = PASSTHRU(SQLQuery);	
+	END;
+	
+END MODULE;

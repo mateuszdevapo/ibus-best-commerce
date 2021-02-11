@@ -1,0 +1,74 @@
+
+
+CREATE COMPUTE MODULE postDiscount_Validate_params
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();	
+		CALL ValidateParameters();	
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+	
+	CREATE PROCEDURE ValidateParameters() BEGIN
+				
+		DECLARE productId INTEGER InputRoot.JSON.Data.discount.productId ;
+		DECLARE dateFrom CHARACTER InputRoot.JSON.Data.discount.dateFrom ;
+		DECLARE dateTo CHARACTER InputRoot.JSON.Data.discount.dateTo;
+		DECLARE discount DECIMAL InputRoot.JSON.Data.discount.discount;
+		
+		DECLARE startDate DATE CAST(dateFrom AS DATE);
+		DECLARE endDate DATE CAST(dateTo AS DATE);
+		
+		SET OutputLocalEnvironment = InputLocalEnvironment;
+		
+		
+		IF NOT isValidDates(dateFrom, dateTo) THEN
+			SET OutputRoot.JSON.Data.response.error = 'DATES are not valid';
+			CALL setFailedStatus();
+			PROPAGATE to TERMINAL 'out1';
+		END IF;
+		
+		IF discount is null or discount <= 0 THEN
+			SET OutputRoot.JSON.Data.response.error = 'discount format is not valid';
+			CALL setFailedStatus();
+			PROPAGATE to TERMINAL 'out1';
+		END IF;
+		
+		IF productId is null or productId <= 0 THEN
+			SET OutputRoot.JSON.Data.response.error = 'productId format is not valid';
+			CALL setFailedStatus();
+			PROPAGATE to TERMINAL 'out1';
+		END IF;
+		
+		PROPAGATE to TERMINAL 'out';      
+    END;
+	
+	CREATE  FUNCTION setFailedStatus() BEGIN
+		SET OutputRoot.JSON.Data.response.code	= 422;
+		SET OutputRoot.JSON.Data.response.status = 'Unprocessable entity';
+		SET OutputRoot.HTTPReplyHeader."Content-Type" = 'text/json';	
+		
+	END;
+	
+	CREATE  FUNCTION isValidDates( IN dateFrom CHARACTER , IN dateTo CHARACTER ) RETURNS BOOLEAN 
+		BEGIN
+			DECLARE startDate DATE CAST(dateFrom AS DATE);
+			DECLARE endDate DATE CAST(dateTo AS DATE);
+
+			IF startDate <= CURRENT_TIMESTAMP AND endDate >= CURRENT_TIMESTAMP THEN
+				RETURN TRUE;
+			ELSE
+				RETURN FALSE;
+			END IF;			
+		END; 
+	
+END MODULE;

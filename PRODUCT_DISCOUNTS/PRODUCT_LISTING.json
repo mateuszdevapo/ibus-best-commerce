@@ -1,0 +1,95 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "PRODUCT_LISTING",
+    "version" : "1.0.0",
+    "description" : "PRODUCT_LISTING"
+  },
+  "paths" : {
+    "/products" : {
+      "get" : {
+        "operationId" : "getProducts",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/Product"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve products",
+        "parameters" : [ {
+          "name" : "rows",
+          "in" : "query",
+          "type" : "integer"
+        }, {
+          "name" : "sortDirection",
+          "in" : "query",
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer"
+        }, {
+          "name" : "orderProperty",
+          "in" : "query",
+          "type" : "string"
+        } ]
+      }
+    },
+    "/product" : {
+      "get" : {
+        "operationId" : "getProduct",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/Product"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve product",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "query",
+          "type" : "integer"
+        } ]
+      }
+    }
+  },
+  "basePath" : "/product-listing/v1/",
+  "definitions" : {
+    "Product" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer"
+        },
+        "category" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "unitprice" : {
+          "type" : "number"
+        },
+        "inventory" : {
+          "type" : "integer"
+        },
+        "paymentoption" : {
+          "type" : "string"
+        },
+        "deliverymethod" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "id" ]
+    }
+  }
+}

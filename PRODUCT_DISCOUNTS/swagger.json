@@ -1,0 +1,160 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "PRODUCT_DISCOUNTS",
+    "version" : "1.0.0",
+    "description" : "PRODUCT_DISCOUNTS"
+  },
+  "paths" : {
+    "/discounts" : {
+      "post" : {
+        "operationId" : "postDiscount",
+        "responses" : {
+          "422" : {
+            "description" : "Unprocessable Entity",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          },
+          "406" : {
+            "description" : "Not Acceptable",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          },
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          },
+          "500" : {
+            "description" : "Internal Error",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Insert a discount",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "$ref" : "#/definitions/product"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        } ]
+      }
+    },
+    "/products" : {
+      "get" : {
+        "operationId" : "getProduct",
+        "responses" : {
+          "422" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          },
+          "406" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          },
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/discount"
+            }
+          },
+          "500" : {
+            "description" : "Internal Error",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve product",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "query",
+          "type" : "number"
+        } ]
+      }
+    }
+  },
+  "basePath" : "/product-discounts/v1",
+  "definitions" : {
+    "discount" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer"
+        },
+        "productId" : {
+          "type" : "integer"
+        },
+        "dateFrom" : {
+          "type" : "string"
+        },
+        "dateTo" : {
+          "type" : "string"
+        },
+        "discount" : {
+          "type" : "string"
+        }
+      }
+    },
+    "product" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer"
+        },
+        "category" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "unitprice" : {
+          "type" : "number"
+        },
+        "inventory" : {
+          "type" : "integer"
+        },
+        "paymentoption" : {
+          "type" : "string"
+        },
+        "deliverymethod" : {
+          "type" : "string"
+        }
+      }
+    },
+    "productId" : {
+      "type" : "integer"
+    },
+    "response" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "string"
+        },
+        "error" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
