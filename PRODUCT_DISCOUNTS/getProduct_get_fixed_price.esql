@@ -22,11 +22,14 @@ CREATE COMPUTE MODULE getProduct_get_fixed_price
 		DECLARE I INTEGER 1;
 		DECLARE J INTEGER;
 		DECLARE currentDate DATE CURRENT_DATE;
+		
+		
+		SET OutputRoot = InputRoot;
 
 		SET J = CARDINALITY(Environment.Variables.Data.products[]);	
 
 		FOR product AS Environment.Variables.Data.products[] DO
-			SET OutputRoot.JSON.Data.response.DiscountedProducts[I] = Environment.Variables.Data.products[I];
+			SET OutputRoot.JSON.Data.product = product;
 			FOR productDiscount AS Environment.Variables.Data.Discounts[] DO
 				DECLARE unitPrice  DECIMAL;
 				DECLARE discountedPrice DECIMAL;
@@ -34,29 +37,14 @@ CREATE COMPUTE MODULE getProduct_get_fixed_price
 				DECLARE dateFrom DATE CAST(productDiscount.datefrom AS DATE);
 				DECLARE dateTo DATE CAST(productDiscount.dateto AS DATE);
 				
-				IF hasPromo(dateFrom, dateTo) THEN
-					DECLARE discount DECIMAL CAST(productDiscount.discount AS DECIMAL);
-					SET unitPrice = product.unitprice;
-					SET discountedPrice = unitPrice - (unitPrice * (discount / 100));
-					
-					SET OutputRoot.JSON.Data.response.DiscountedProducts[I].unitprice = ROUND(discountedPrice, 2);
-				END IF;
+				DECLARE discount DECIMAL CAST(productDiscount.discount AS DECIMAL DEFAULT 0.0);
+				SET unitPrice = product.unitprice;
+				SET discountedPrice = unitPrice - (unitPrice * (discount / 100));
+				
+				SET OutputRoot.JSON.Data.product.unitprice = ROUND(discountedPrice, 2);
 			END FOR;
-		END FOR;
-
-		SET OutputRoot.JSON.Data.response.status = 'SUCCESS';
-		SET OutputRoot.JSON.Data.response.code = '200';
-		
+		END FOR;		
 	END;
-		
-	CREATE  FUNCTION hasPromo( IN startDate DATE , IN endDate DATE ) RETURNS BOOLEAN 
-			BEGIN
-				IF startDate <= CURRENT_DATE AND endDate >= CURRENT_DATE THEN
-					RETURN TRUE;
-				ELSE
-					RETURN FALSE;
-				END IF;			
-			END; 
 
 
 END MODULE;

@@ -6,29 +6,29 @@
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PRODUCT_DISCOUNTS/icons/full/obj16/getProduct.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PRODUCT_DISCOUNTS/icons/full/obj30/getProduct.gif"/>
     <composition>
-      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input_1" location="122,228">
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input_1" location="46,247">
         <translation xmi:type="utility:TranslatableString" key="Input" bundleName="getProduct" pluginId="PRODUCT_DISCOUNTS"/>
       </nodes>
-      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output_1" location="1322,174">
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output_1" location="1305,245">
         <translation xmi:type="utility:TranslatableString" key="Output" bundleName="getProduct" pluginId="PRODUCT_DISCOUNTS"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="202,401" computeExpression="esql://routine/#getProduct_Validate_param.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="156,484" computeExpression="esql://routine/#getProduct_Validate_param.Main">
         <translation xmi:type="utility:ConstantString" string="Validate param"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="590,205" dataSource="PostgreSQL35W" computeExpression="esql://routine/#getProduct_Get_Discount.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="584,240" dataSource="PostgreSQL35W" computeExpression="esql://routine/#getProduct_Get_Discount.Main">
         <translation xmi:type="utility:ConstantString" string="Get Discount"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="1008,9" computeExpression="esql://routine/#postDiscount_Error_handling.Main">
         <translation xmi:type="utility:ConstantString" string="Error handling"/>
       </nodes>
-      <nodes xmi:type="ComIbmRESTRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="342,233" definitionType="swagger_20" definitionFile="PRODUCT_LISTING.json" operationName="getProduct" baseURL="http://localhost:7800/product-listing/v1/" acceptCompressedResponses="true">
+      <nodes xmi:type="ComIbmRESTRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="337,246" definitionType="swagger_20" definitionFile="PRODUCT_LISTING.json" operationName="getProduct" baseURL="http://localhost:7800/product-listing/v1/" acceptCompressedResponses="true">
         <translation xmi:type="utility:ConstantString" string="getProduct"/>
         <parameters name="productId" expression="$LocalEnvironment/REST/Input/Parameters/productId"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="756,201" computeExpression="esql://routine/#getProduct_get_fixed_price.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="752,241" computeExpression="esql://routine/#getProduct_get_fixed_price.Main">
         <translation xmi:type="utility:ConstantString" string="Get Discount Product "/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="433,400" computeExpression="esql://routine/#getProduct_Validate_Result.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="472,367" computeExpression="esql://routine/#getProduct_Validate_Result.Main">
         <translation xmi:type="utility:ConstantString" string="Validate Result"/>
       </nodes>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
@@ -42,7 +42,9 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_18" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_19" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_22" targetNode="OutTerminal.Output_1" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
-      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_23" targetNode="OutTerminal.Output_1" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_23" targetNode="OutTerminal.Output_1" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in">
+        <bendPoints>527,-19,-586,220</bendPoints>
+      </connections>
     </composition>
     <propertyOrganizer/>
     <stickyBoard/>

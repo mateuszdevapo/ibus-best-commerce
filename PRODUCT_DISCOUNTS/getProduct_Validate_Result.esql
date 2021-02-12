@@ -31,6 +31,7 @@ CREATE COMPUTE MODULE getProduct_Validate_Result
 		END IF;
 		
 		SET Environment.Variables.Data.products[] = InputRoot.JSON.Data.Item[];
+		SET Environment.Variables.Data.products[1].unitprice = ROUND(CAST(Environment.Variables.Data.products[1].unitprice as DECIMAL), 2);
 	END;
 	
 END MODULE;

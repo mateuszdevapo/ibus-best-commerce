@@ -16,12 +16,6 @@
               "$ref" : "#/definitions/response"
             }
           },
-          "406" : {
-            "description" : "Not Acceptable",
-            "schema" : {
-              "$ref" : "#/definitions/response"
-            }
-          },
           "200" : {
             "description" : "The operation was successful.",
             "schema" : {
@@ -53,14 +47,8 @@
       "get" : {
         "operationId" : "getProduct",
         "responses" : {
-          "422" : {
-            "description" : "The operation was successful.",
-            "schema" : {
-              "$ref" : "#/definitions/response"
-            }
-          },
           "406" : {
-            "description" : "The operation was successful.",
+            "description" : "Not Acceptable",
             "schema" : {
               "$ref" : "#/definitions/response"
             }
@@ -68,11 +56,17 @@
           "200" : {
             "description" : "The operation was successful.",
             "schema" : {
-              "$ref" : "#/definitions/discount"
+              "$ref" : "#/definitions/product"
             }
           },
           "500" : {
             "description" : "Internal Error",
+            "schema" : {
+              "$ref" : "#/definitions/response"
+            }
+          },
+          "404" : {
+            "description" : "Not found",
             "schema" : {
               "$ref" : "#/definitions/response"
             }
@@ -100,10 +94,12 @@
           "type" : "integer"
         },
         "dateFrom" : {
-          "type" : "string"
+          "type" : "string",
+          "format" : "yyyy-MM-dd"
         },
         "dateTo" : {
-          "type" : "string"
+          "type" : "string",
+          "format" : "yyyy-MM-dd"
         },
         "discount" : {
           "type" : "string"

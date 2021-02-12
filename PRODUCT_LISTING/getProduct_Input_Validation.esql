@@ -19,7 +19,7 @@ CREATE COMPUTE MODULE getProduct_Input_Validation
 	END;
 	
 	CREATE PROCEDURE ValidateParameters() BEGIN
-		DECLARE productId INTEGER InputLocalEnvironment.REST.Input.Parameters.productId;
+		DECLARE productId INTEGER CAST(InputLocalEnvironment.REST.Input.Parameters.productId AS INTEGER DEFAULT -1);
 		
 		SET OutputLocalEnvironment = InputLocalEnvironment;
 		

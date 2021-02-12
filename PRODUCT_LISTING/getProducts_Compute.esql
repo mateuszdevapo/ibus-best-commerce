@@ -39,13 +39,13 @@ CREATE COMPUTE MODULE getProducts_Compute
 			PROPAGATE to TERMINAL 'out1';
 		END IF;
 		
-		IF orderProperty <> 'inventory' AND orderProperty <> 'unitPrice' THEN
+		IF UCASE(orderProperty) <> 'INVENTORY' AND UCASE(orderProperty) <> 'UNITPRICE' THEN
 			SET OutputRoot.JSON.Data.response.error = 'orderProperty format is not valid';
 			CALL setFailedStatus();
 			PROPAGATE to TERMINAL 'out1';
 		END IF;
 		
-		IF sortDirection <> 'ASC' AND sortDirection <> 'DESC' THEN
+		IF UCASE(sortDirection) <> 'ASC' AND UCASE(sortDirection) <> 'DESC' THEN
 			SET OutputRoot.JSON.Data.response.error = 'SortDirection format is not valid';
 			CALL setFailedStatus();
 			PROPAGATE to TERMINAL 'out1';

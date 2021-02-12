@@ -1,13 +1,13 @@
 ***BestCommerce task for Azer Bank***
 
 Project contains 2 microservices:
-- sign up module allows to create a merchant profile. It saves object to database and puts notification on activeMq queue (activeMq).
-- sign in module allows user to log in based on sign up module credentials. User gets token after correct logging*
+- sign up module allows to create a merchant profile. It saves object to database and puts notification on activeMq queue.
+- sign in module allows user to log in based on sign up module credentials. User gets token after correct logging
 
 -------------------------------------------------------------------------
 **Run project**
 
-*To run project type `docker-compose build && docker-compose up` in parent folder*.
+*To run project type `docker-compose build && docker-compose up` in parent folder.
 
 -------------------------------------------------------------------------
 

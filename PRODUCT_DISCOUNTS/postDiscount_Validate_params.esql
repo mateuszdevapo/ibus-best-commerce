@@ -20,15 +20,15 @@ CREATE COMPUTE MODULE postDiscount_Validate_params
 	
 	CREATE PROCEDURE ValidateParameters() BEGIN
 				
-		DECLARE productId INTEGER InputRoot.JSON.Data.discount.productId ;
-		DECLARE dateFrom CHARACTER InputRoot.JSON.Data.discount.dateFrom ;
+		DECLARE productId INTEGER InputRoot.JSON.Data.discount.productId;
+		DECLARE dateFrom CHARACTER InputRoot.JSON.Data.discount.dateFrom;
 		DECLARE dateTo CHARACTER InputRoot.JSON.Data.discount.dateTo;
 		DECLARE discount DECIMAL InputRoot.JSON.Data.discount.discount;
 		
 		DECLARE startDate DATE CAST(dateFrom AS DATE);
 		DECLARE endDate DATE CAST(dateTo AS DATE);
 		
-		SET OutputLocalEnvironment = InputLocalEnvironment;
+		--SET OutputLocalEnvironment = InputLocalEnvironment;
 		
 		
 		IF NOT isValidDates(dateFrom, dateTo) THEN
@@ -37,7 +37,7 @@ CREATE COMPUTE MODULE postDiscount_Validate_params
 			PROPAGATE to TERMINAL 'out1';
 		END IF;
 		
-		IF discount is null or discount <= 0 THEN
+		IF discount is null or discount <= 0 or discount >= 100 THEN
 			SET OutputRoot.JSON.Data.response.error = 'discount format is not valid';
 			CALL setFailedStatus();
 			PROPAGATE to TERMINAL 'out1';
@@ -48,6 +48,8 @@ CREATE COMPUTE MODULE postDiscount_Validate_params
 			CALL setFailedStatus();
 			PROPAGATE to TERMINAL 'out1';
 		END IF;
+		
+		SET Environment.Variables.Data.Discount = InputRoot.JSON.Data.discount;
 		
 		PROPAGATE to TERMINAL 'out';      
     END;

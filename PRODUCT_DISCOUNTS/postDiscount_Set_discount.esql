@@ -21,10 +21,10 @@ CREATE COMPUTE MODULE postDiscount_Set_discount
 	CREATE PROCEDURE CreateMessage() BEGIN	
 		
 		DECLARE insertQuery CHARACTER;	
-		DECLARE productId CHARACTER CAST(InputRoot.JSON.Data.discount.productId AS INTEGER);
-		DECLARE dateFrom CHARACTER InputRoot.JSON.Data.discount.dateFrom ;
-		DECLARE dateTo CHARACTER InputRoot.JSON.Data.discount.dateTo;
-		DECLARE discount CHARACTER CAST(InputRoot.JSON.Data.discount.discount AS DECIMAL);
+		DECLARE productId CHARACTER CAST(Environment.Variables.Data.Discount.productId AS INTEGER);
+		DECLARE dateFrom CHARACTER Environment.Variables.Data.Discount.dateFrom ;
+		DECLARE dateTo CHARACTER Environment.Variables.Data.Discount.dateTo;
+		DECLARE discount CHARACTER CAST(Environment.Variables.Data.Discount.discount AS DECIMAL);
 	
 		SET insertQuery = 'INSERT INTO product_discount (productId, datefrom, dateto, discount) VALUES (' 
 		|| productId || ', ' || '''' || dateFrom || '''' || ', ' || '''' || dateTo || '''' || ', ' || discount || ');';
